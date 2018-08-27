@@ -1,8 +1,14 @@
-//import './css/reset.css';
-//import './css/style.css';
-//import url from './css/reset.css';
+/**
+ *
+ * Scripts to gather the data required for the app
+ * Uses the Open Weather Free API 
+ *
+ */
 
-/*----------  Fetch the current weather  ----------*/
+
+/*===========================================
+=            Single Day API Call            =
+===========================================*/
 fetch('https://api.openweathermap.org/data/2.5/weather?id=7778677&units=metric&APPID=fac285e120da5b555fbff2647b788aa6')
     .then(function(response) {
         if (response.status !== 200) {
@@ -10,20 +16,20 @@ fetch('https://api.openweathermap.org/data/2.5/weather?id=7778677&units=metric&A
                 response.status);
             return;
         }
-
         response.json().then(function(data) {
             console.log(data)
             document.getElementById('temp_digit').innerHTML = Math.round(data.main.temp);
             document.getElementById('current_weather').innerHTML = data.weather[0].main;
             document.getElementById('location').innerHTML = '<h1>' + data.name + '</h1>'
-        	document.getElementById('icon').innerHTML = '<i class="wi wi-owm-day-' + data.weather[0].id + '"></i>'
+            document.getElementById('icon').innerHTML = '<i class="wi wi-owm-day-' + data.weather[0].id + '"></i>'
         })
     })
     .catch((err) => console.log(err))
+/*=====  End of Single Day API Call  ======*/
 
-/*----------  Fetch 5 day forcast  ----------*/
-/* Also holds functions to filter the necessary dat */
-
+/*=======================================================
+=            5 Day Weather Forcast w/ filter            =
+=======================================================*/
 let date = new Date();
 let day = date.getDay();
 let z = day;
@@ -35,18 +41,13 @@ if (z == 6) {
 }
 const week = ['Sun', 'Mon', 'Tues', 'Weds', 'Thurs', 'Fri', 'Sat'];
 
-console.log()
-
 function generateList(temp, icon) {
     let string = ''
-    string += '<div class="single_list_container">'
-    string += '<span class="day">'
+    string += '<div class="single_list_container"><span class="day">'
     string += week[z]
-    string += '</span>'
-    string += '<span class="single_temp">'
+    string += '</span><span class="single_temp">'
     string += temp
-    string += '<i class="wi list_temp wi-celsius"></i></span>'
-    string += '<i class="wi wi-owm-day-'
+    string += '<i class="wi list_temp wi-celsius"></i></span><i class="wi wi-owm-day-'
     string += icon
     string += '"></i>';
 
@@ -63,6 +64,7 @@ function generateList(temp, icon) {
     app_list.appendChild(day_temp)
 }
 
+/*----------  5 Day API CALL  ----------*/
 fetch('https://api.openweathermap.org/data/2.5/forecast?id=7778677&units=metric&APPID=fac285e120da5b555fbff2647b788aa6&mode=json')
     .then(function(response) {
 
@@ -79,8 +81,11 @@ fetch('https://api.openweathermap.org/data/2.5/forecast?id=7778677&units=metric&
         })
     })
     .catch((err) => console.log(err))
+/*=====  End of 5 Day Weather Forcast w/ filter  ======*/
 
-/*----------  sort out the sidebar func  ----------*/
+/*=====================================================
+=            Sliding functions for sidebar            =
+=====================================================*/
 let open = false;
 document.getElementById('burger').onclick = function() {
     const sidebar = document.getElementById('sidebar');
@@ -98,3 +103,4 @@ document.getElementById('burger').onclick = function() {
         open = false;
     }
 }
+/*=====  End of Sliding functions for sidebar  ======*/
