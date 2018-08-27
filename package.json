@@ -10,6 +10,7 @@
   "author": "Robin Screech",
   "license": "ISC",
   "devDependencies": {
+    "browser-sync": "^2.24.7",
     "css-loader": "^1.0.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^2.0.0",
