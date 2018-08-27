@@ -1,0 +1,30 @@
+{
+  "name": "gulp_weather_app",
+  "version": "1.0.0",
+  "description": "Practicing flexbox, openweather api, webpack and Puppeteer",
+  "main": "app.js",
+  "scripts": {
+    "test": "app",
+    "build": "webpack"
+  },
+  "author": "Robin Screech",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^1.0.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^2.0.0",
+    "gulp": "^3.9.1",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.4.2",
+    "style-loader": "^0.22.1",
+    "webpack-command": "^0.4.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robinscreech/gulp_app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/robinscreech/gulp_app/issues"
+  },
+  "homepage": "https://github.com/robinscreech/gulp_app#readme"
+}
