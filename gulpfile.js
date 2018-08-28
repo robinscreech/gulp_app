@@ -9,41 +9,47 @@
 const gulp = require('gulp');
 const less = require('gulp-less');
 const browserSync = require('browser-sync').create();
+const useref = require('gulp-useref');
+const uglify = require('gulp-uglify-es').default;
+const gulpIf = require('gulp-if');
+const cssnano = require('gulp-cssnano');
 
 var path = require('path');
  
 gulp.task('less', function () {
-  return gulp.src('./css/*.less')
+  return gulp.src('css/*.less')
     .pipe(less({
       paths: [ path.join(__dirname, 'less', 'includes') ]
     }))
-    .pipe(gulp.dest('./dist/css'))
+    .pipe(gulp.dest('./css'))
 	.pipe(browserSync.reload({
 		stream: true
 	}))
 });
 
-
 gulp.task('browserSync', function() {
   browserSync.init({
     server: {
-      baseDir: 'gulp_weather_app'
+      baseDir: './dist'
     },
   })
 })
 
-//gulp.watch('files to watch', ['tasks', 'to', 'run'])
+gulp.task('fonts', function() {
+  return gulp.src('font/**/*')
+  .pipe(gulp.dest('dist/font'))
+})
 
-gulp.task('watch', ['browserSync', 'less'], function (){
-  gulp.watch('./css/*.scss', ['less']); 
-  // Other watchers
+gulp.task('useref', ['fonts'], function(){
+    return gulp.src('*.html')
+    .pipe(useref())
+    .pipe(gulpIf('*.js', uglify()))
+    .pipe(gulpIf('*.css', cssnano()))
+    .pipe(gulp.dest('dist'))
 });
 
-/**
-
-	TODO:
-	- Fix the browser sync not serving file
-	- Continue through tutorial
-	- Make sure its serving up the Dist folder
-
- */
+gulp.task('watch', ['browserSync', 'less'], function (){
+	gulp.watch('css/*.less', ['less']); 
+	gulp.watch('*.html', browserSync.reload); 
+	gulp.watch('*.js', browserSync.reload); 
+});
